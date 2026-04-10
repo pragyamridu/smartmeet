@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartMeet — Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="db-root" id="dbRoot">
+
+  <!-- TOP NAV -->
+  <div class="topnav">
+    <div class="topnav-left">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="7" cy="7" r="3" stroke="#1c3a52" stroke-width="1.5"/>
+          <circle cx="14" cy="7" r="2.2" stroke="#3a5a72" stroke-width="1.3"/>
+          <path d="M2 16c0-2.5 2.2-4 5-4s5 1.5 5 4" stroke="#1c3a52" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M14 13c1.8 0.3 3 1.2 3 3" stroke="#3a5a72" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="nav-brand">SmartMeet</span>
+    </div>
+
+    <div class="topnav-center">
+      <div class="search-wrap">
+        <svg viewBox="0 0 16 16" fill="none" stroke="rgba(180,215,240,0.6)" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="6.5" cy="6.5" r="4"/>
+          <path d="M10.5 10.5l3 3"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search people or groups…">
+      </div>
+    </div>
+
+    <div class="topnav-right">
+      <div class="nav-avatar" id="userAvatar">AJ</div>
+      <button class="logout-btn" onclick="handleLogout()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+          <path d="M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3M7 11l3-3-3-3M10 8H2"/>
+        </svg>
+        Log out
+      </button>
+    </div>
+  </div>
+
+
+  <!-- MAIN CONTENT -->
+  <div class="main" onclick="closePopups()">
+
+    <!-- Greeting -->
+    <div class="greeting">
+      <span class="greeting-name">Hello, <em id="greetName">Arjun</em></span>
+      <span class="greeting-sub" id="nearbyCount">· 3 members nearby</span>
+    </div>
+
+    <!-- Quick action cards -->
+    <div class="quick-row">
+      <div class="quick-card" onclick="openModal('group'); event.stopPropagation();">
+        <div class="quick-icon" style="background:rgba(240,210,80,0.15);">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#b08010" stroke-width="1.5" stroke-linecap="round">
+            <path d="M9 3v12M3 9h12"/>
+          </svg>
+        </div>
+        <div class="quick-label">Create group</div>
+        <div class="quick-desc">Start a new squad session</div>
+      </div>
+
+      <div class="quick-card" onclick="openModal('find'); event.stopPropagation();">
+        <div class="quick-icon" style="background:rgba(123,189,224,0.15);">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#2a6a8a" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="7" cy="7" r="4.5"/>
+            <path d="M12 12l3.5 3.5"/>
+          </svg>
+        </div>
+        <div class="quick-label">Find people</div>
+        <div class="quick-desc">Locate your squad live</div>
+      </div>
+
+      <div class="quick-card" onclick="openMaps(); event.stopPropagation();">
+        <div class="quick-icon" style="background:rgba(144,207,168,0.15);">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#1a6a3a" stroke-width="1.5" stroke-linecap="round">
+            <path d="M9 2C6.2 2 4 4.2 4 7c0 4 5 9 5 9s5-5 5-9c0-2.8-2.2-5-5-5z"/>
+            <circle cx="9" cy="7" r="1.8"/>
+          </svg>
+        </div>
+        <div class="quick-label">Open maps</div>
+        <div class="quick-desc">View on Google Maps</div>
+      </div>
+
+      <div class="quick-card" onclick="openModal('ai'); event.stopPropagation();">
+        <div class="quick-icon" style="background:rgba(212,160,216,0.18);">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#7a3a8a" stroke-width="1.5" stroke-linecap="round">
+            <path d="M9 2a7 7 0 100 14A7 7 0 009 2z"/>
+            <path d="M9 8v3M9 6.5v.3"/>
+          </svg>
+        </div>
+        <div class="quick-label">AI help</div>
+        <div class="quick-desc">Ask SmartMeet anything</div>
+      </div>
+    </div>
+
+    <!-- Mid row: mini map + right panel -->
+    <div class="mid-row">
+
+      <div class="left-col">
+
+        <!-- Mini map -->
+        <div class="maps-card">
+          <div class="maps-card-header">
+            <div class="maps-card-title">
+              <svg viewBox="0 0 14 14" fill="none" stroke="#2a5570" stroke-width="1.3" stroke-linecap="round">
+                <path d="M7 1C4.8 1 3 2.8 3 5c0 3 4 7 4 7s4-4 4-7c0-2.2-1.8-4-4-4z"/>
+                <circle cx="7" cy="5" r="1.3"/>
+              </svg>
+              Squad map
+            </div>
+            <button class="open-maps-btn" onclick="openMaps()">
+              <svg viewBox="0 0 12 12" fill="none" stroke="#f0d040" stroke-width="1.3" stroke-linecap="round">
+                <path d="M6 1C3.8 1 2 2.8 2 5c0 2.5 4 5.5 4 5.5S10 7.5 10 5c0-2.2-1.8-4-4-4z"/>
+                <circle cx="6" cy="5" r="1.2"/>
+              </svg>
+              Open in maps
+            </button>
+          </div>
+          <div class="mini-map">
+            <div class="mini-map-grid"></div>
+            <div class="mini-road-h" style="top:42%;"></div>
+            <div class="mini-road-h" style="top:68%;"></div>
+            <div class="mini-road-v" style="left:36%;"></div>
+            <div class="mini-road-v" style="left:65%;"></div>
+
+            <div class="sm-pin" style="top:18%;left:18%;">
+              <div class="pin-pulse-wrap">
+                <div class="sm-ping"></div>
+                <div class="sm-ping sm-ping2"></div>
+                <div class="sm-pin-dot" style="background:#f0d040;">
+                  <div class="sm-pin-inner"></div>
+                </div>
+              </div>
+              <div class="sm-pin-lbl">You</div>
+            </div>
+
+            <div class="sm-pin" style="top:44%;left:54%;">
+              <div class="sm-pin-dot" style="background:#7bbde0;">
+                <div class="sm-pin-inner"></div>
+              </div>
+              <div class="sm-pin-lbl">Priya</div>
+            </div>
+
+            <div class="sm-pin" style="top:58%;left:28%;">
+              <div class="sm-pin-dot" style="background:#90cfa8;">
+                <div class="sm-pin-inner"></div>
+              </div>
+              <div class="sm-pin-lbl">Ravi</div>
+            </div>
+
+            <div class="sm-pin" style="top:25%;left:70%;">
+              <div class="sm-pin-dot" style="background:#d4a0d8;">
+                <div class="sm-pin-inner"></div>
+              </div>
+              <div class="sm-pin-lbl">Neha</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI card -->
+        <div class="ai-card">
+          <div class="ai-card-deco"></div>
+          <div class="ai-card-title">
+            <svg viewBox="0 0 14 14" fill="none" stroke="#f0d040" stroke-width="1.3" stroke-linecap="round">
+              <path d="M7 1a6 6 0 100 12A6 6 0 007 1z"/>
+              <path d="M7 7v2.5M7 5.5v.3"/>
+            </svg>
+            AI assistant
+          </div>
+          <div class="ai-sub">Ask anything about your squad</div>
+          <div class="ai-suggestions">
+            <span class="ai-suggestion" onclick="fillAI('Where is Priya right now?')">Where is Priya?</span>
+            <span class="ai-suggestion" onclick="fillAI('Best route to meet Ravi')">Route to Ravi</span>
+            <span class="ai-suggestion" onclick="fillAI('Who is closest to me?')">Who is closest?</span>
+          </div>
+          <div class="ai-prompt-row">
+            <input class="ai-input" id="aiInput" type="text" placeholder="Ask SmartMeet AI…">
+            <button class="ai-send" onclick="sendAI()">Ask</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right col: active group -->
+      <div class="right-col">
+        <div class="panel-card">
+          <div class="panel-card-title">
+            <svg viewBox="0 0 14 14" fill="none" stroke="#2a5570" stroke-width="1.3" stroke-linecap="round">
+              <circle cx="5" cy="4" r="2"/>
+              <circle cx="10" cy="4" r="1.6"/>
+              <path d="M1 11c0-1.8 1.8-3 4-3s4 1.2 4 3"/>
+              <path d="M10 7.5c1.2.2 2.5.9 2.5 2.5"/>
+            </svg>
+            Active group · <span id="activeGroupCode">SQAD42</span>
+          </div>
+
+          <div class="group-code-box">
+            <span class="group-code" id="groupCodeDisplay">SQAD42</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+
+          <div class="member-row">
+            <div class="member-avatar" style="background:rgba(123,189,224,0.2);color:#2a6a8a;">PR</div>
+            <div class="member-info">
+              <div class="member-name">Priya</div>
+              <div class="member-status">Moving · 320m away</div>
+            </div>
+            <div class="navigate-dot" onclick="navigateTo('Priya')" title="Navigate to Priya">
+              <svg viewBox="0 0 10 10" fill="none" stroke="#1c3a52" stroke-width="1.3" stroke-linecap="round">
+                <path d="M2 8l6-3-3-6v9"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="member-row">
+            <div class="member-avatar" style="background:rgba(144,207,168,0.2);color:#1a6a3a;">RV</div>
+            <div class="member-info">
+              <div class="member-name">Ravi</div>
+              <div class="member-status">Stationary · 180m</div>
+            </div>
+            <div class="navigate-dot" onclick="navigateTo('Ravi')" title="Navigate to Ravi">
+              <svg viewBox="0 0 10 10" fill="none" stroke="#1c3a52" stroke-width="1.3" stroke-linecap="round">
+                <path d="M2 8l6-3-3-6v9"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="member-row">
+            <div class="member-avatar" style="background:rgba(212,160,216,0.2);color:#7a3a8a;">NH</div>
+            <div class="member-info">
+              <div class="member-name">Neha</div>
+              <div class="member-status">Moving · 540m away</div>
+            </div>
+            <div class="navigate-dot" onclick="navigateTo('Neha')" title="Navigate to Neha">
+              <svg viewBox="0 0 10 10" fill="none" stroke="#1c3a52" stroke-width="1.3" stroke-linecap="round">
+                <path d="M2 8l6-3-3-6v9"/>
+              </svg>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MY GROUPS POPUP -->
+  <div class="groups-popup" id="groupsPopup">
+    <button class="popup-close" onclick="toggleGroupsPopup(event)">×</button>
+    <div class="popup-title">My groups</div>
+    <div class="popup-sub">Tap a group to switch to it</div>
+
+    <div class="group-item" onclick="switchGroup('SQAD42', 'Squad 42')">
+      <div class="group-item-icon" style="background:rgba(240,210,80,0.2);color:#b08010;">SQ</div>
+      <div class="group-item-info">
+        <div class="group-item-name">Squad 42</div>
+        <div class="group-item-meta">4 members · SQAD42</div>
+      </div>
+      <span class="group-item-badge badge-active">Active</span>
+    </div>
+
+    <div class="group-item" onclick="switchGroup('CAMP06', 'Campus crew')">
+      <div class="group-item-icon" style="background:rgba(123,189,224,0.2);color:#2a6a8a;">CP</div>
+      <div class="group-item-info">
+        <div class="group-item-name">Campus crew</div>
+        <div class="group-item-meta">6 members · CAMP06</div>
+      </div>
+      <span class="group-item-badge badge-idle">Idle</span>
+    </div>
+
+    <div class="group-item" onclick="switchGroup('MALL03', 'Mall gang')">
+      <div class="group-item-icon" style="background:rgba(212,160,216,0.2);color:#7a3a8a;">MG</div>
+      <div class="group-item-info">
+        <div class="group-item-name">Mall gang</div>
+        <div class="group-item-meta">3 members · MALL03</div>
+      </div>
+      <span class="group-item-badge badge-idle">Idle</span>
+    </div>
+  </div>
+
+  <!-- MODAL OVERLAY -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+    <div class="modal-box">
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+</div>
+
+<script type="module" src="dashboard.js"></script>
+
+</body>
+</html>
