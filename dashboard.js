@@ -26,9 +26,6 @@ const firebaseConfig = {
   apiKey: "AIzaSyBIYhPaUfakThH1dAOLck05Ty1uikYTSCM",
   authDomain: "smartmeet-4fcf9.firebaseapp.com",
   projectId: "smartmeet-4fcf9",
-  storageBucket: "smartmeet-4fcf9.firebasestorage.app",
-  messagingSenderId: "522662041548",
-  appId: "1:522662041548:web:75f63afad95fb97e072f69"
 };
 
 // Initialize Firebase
