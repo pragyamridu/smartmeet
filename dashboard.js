@@ -16,14 +16,23 @@ import { getFirestore,
 
 // ── Firebase config ──────────────────────────
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDLGn52C30aYGDJoU3G7UOHK7za6YBlcu0",
-  authDomain: "smartmeet2-3ef95.firebaseapp.com",
-  projectId: "smartmeet2-3ef95",
-  storageBucket: "smartmeet2-3ef95.firebasestorage.app",
-  messagingSenderId: "972767742229",
-  appId: "1:972767742229:web:d94e500df52d500e34411c"
+  apiKey: "AIzaSyBIYhPaUfakThH1dAOLck05Ty1uikYTSCM",
+  authDomain: "smartmeet-4fcf9.firebaseapp.com",
+  projectId: "smartmeet-4fcf9",
+  storageBucket: "smartmeet-4fcf9.firebasestorage.app",
+  messagingSenderId: "522662041548",
+  appId: "1:522662041548:web:75f63afad95fb97e072f69"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
 const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
