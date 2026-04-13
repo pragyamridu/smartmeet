@@ -72,35 +72,30 @@ window.handleLogout = async function () {
 // ============================================
 window.openMaps = function () {
   if (!navigator.geolocation) {
-    alert("Geolocation not supported. Opening Google Maps...");
+    alert("Geolocation not supported");
     window.open("https://www.google.com/maps", "_blank");
     return;
   }
 
-  // Ask for permission
   navigator.geolocation.getCurrentPosition(
     (position) => {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
 
-      // Open maps with your exact location
+      const destLat = 28.7041;
+      const destLng = 77.1025;
+
       window.open(
-        `https://www.google.com/maps?q=${lat},${lng}`,
+        `https://www.google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${destLat},${destLng}`,
         "_blank"
       );
     },
-    (error) => {
-      if (error.code === error.PERMISSION_DENIED) {
-        alert("Location permission denied. Opening Google Maps...");
-      } else {
-        alert("Could not get location. Opening Google Maps...");
-      }
-
-      // Fallback
+    () => {
       window.open("https://www.google.com/maps", "_blank");
     }
   );
 };
+
 
 // ============================================
 //  NAVIGATE TO MEMBER
